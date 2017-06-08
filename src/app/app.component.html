@@ -1,3 +1,56 @@
-<h1>
-  {{title}}
-</h1>
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Validierung mit Angular</div>
+
+    <div class="panel-body">
+      <form #form="ngForm" (ngSubmit)="submit()" novalidate>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="name">Bezeichnung</label>
+            <span class="error" *ngIf="!form.control.get('name')?.valid"> Pflichtfeld </span>
+            <input id="name" name="name" type="text" class="form-control" [(ngModel)]="material.name" required ngModel>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="artnr">Artikelnummer</label>
+            <span class="error" *ngIf="artnr.hasError('pattern')"> Format: 0000-0000 </span>
+            <span class="error" *ngIf="artnr.hasError('required')"> Pflichtfeld </span>
+            <input id="artnr" name="artnr" type="text" class="form-control" [(ngModel)]="material.artikelnummer" required pattern="\d+-\d+" #artnr="ngModel">
+          </div>
+        </div>
+        <div ngModelGroup #range="ngModelGroup" appRangeValidator von-pfad="lvon" bis-pfad="lbis">
+          <div class="col-sm-12">
+            <span class="error" *ngIf="!range.valid">Range ungültig, "von" muss kleiner sein als "bis"</span>
+          </div>
+          
+          <div class="col-sm-12 col-md-6 form-group">
+            <label for="lvon">Lieferdauer von:</label>
+            <input id="lvon" name="lvon" type="text" class="form-control" [(ngModel)]="material.lieferzeit.von">
+          </div>
+          <div class="col-sm-12 col-md-6 form-group">
+            <label for="lbis">Lieferdauer bis:</label>
+            <input id="lbis" name="lbis" type="text" class="form-control" [(ngModel)]="material.lieferzeit.bis">
+          </div>
+
+          {{range?.errors | json}}
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="name">letzter Bearbeiter</label>
+            <span class="error" *ngIf="!user?.valid"> Benutzer ID nicht gefunden </span>
+            <input id="user" name="user" type="text" class="form-control" [(ngModel)]="material.letzterAenderer" #user="ngModel" appAsyncUserValidator>
+          </div>
+        </div>
+        <div class="col-sm-2 col-sm-offset-5">
+          <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!form.valid">submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="panel">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let m of erfasst">{{m.artikelnummer}} : {{m.name}}</li>
+    </ul>
+  </div>
+</div>

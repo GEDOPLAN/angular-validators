@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Material, Range } from './app.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+
+  erfasst: Material[] = [];
+
+  material: Material = new Material();
+
+  submit() {
+    this.erfasst.push(this.material);
+    this.material = new Material();
+  }
 }
