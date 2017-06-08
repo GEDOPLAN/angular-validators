@@ -16,6 +16,8 @@ Inhalt:
   - FormGroup
 
 
+![Screenshot](docs/app.png)
+
 ## Development server
 
 Starten per `ng serve` URL: `http://localhost:4200/`. 
