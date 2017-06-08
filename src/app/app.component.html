@@ -36,7 +36,7 @@
         <div class="col-sm-12">
           <div class="form-group">
             <label for="name">letzter Bearbeiter</label>
-            <span class="error" *ngIf="!user?.valid"> Benutzer ID nicht gefunden </span>
+            <span class="error" *ngIf="!user.pending && !user?.valid"> Benutzer ID nicht gefunden </span>
             <input id="user" name="user" type="text" class="form-control" [(ngModel)]="material.letzterAenderer" #user="ngModel" appAsyncUserValidator>
           </div>
         </div>
